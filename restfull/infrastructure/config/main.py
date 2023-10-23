@@ -9,9 +9,5 @@ class Settings(BaseSettings):
 
     database_url: str = "sqlite:///./restfull.db"
 
-    user_tag: str = "user"
-    all_users: str = "users"
-    user: str = "user"
-
 
 settings = Settings()
