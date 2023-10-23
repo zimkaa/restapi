@@ -5,6 +5,7 @@ from restfull.infrastructure.api.endpoints import get_all_users
 from restfull.infrastructure.api.endpoints import create_user
 from restfull.infrastructure.api.endpoints import get_user
 from restfull.infrastructure.api.endpoints import update_user
+from restfull.infrastructure.api.endpoints import delete_user
 from restfull.infrastructure.config import settings
 from restfull.domain import const
 
@@ -42,6 +43,12 @@ application.include_router(
 
 application.include_router(
     update_user.router,
+    prefix=const.API,
+    tags=[const.USER_TAG],
+)
+
+application.include_router(
+    delete_user.router,
     prefix=const.API,
     tags=[const.USER_TAG],
 )
