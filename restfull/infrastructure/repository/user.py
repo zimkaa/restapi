@@ -1,18 +1,12 @@
-from typing import Any
-
 from loguru import logger
 # from sqlalchemy import delete
 from sqlalchemy import insert
 from sqlalchemy import select
 from sqlalchemy import update
 from sqlalchemy import text
-from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from restfull.domain.entities.user import BaseUser, User
-
-# from offline.domain.entities.user import BaseUser, TelegramUser
-# from offline.domain.exceptions import TelegramUserAlreadyExists, UserNotFound, UserPhoneAlreadyExists
 from restfull.domain.repository.user import UserRepository
 from restfull.domain.types import UserID
 from restfull.infrastructure.models.user import UserModel
