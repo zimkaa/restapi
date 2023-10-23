@@ -4,9 +4,11 @@ from sqlalchemy import insert
 from sqlalchemy import select
 from sqlalchemy import update
 from sqlalchemy import text
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.ext.asyncio import async_sessionmaker
 
-from restfull.domain.entities.user import BaseUser, User
+from restfull.domain.entities.user import BaseUser
+from restfull.domain.entities.user import UserWhitPassword
 from restfull.domain.repository.user import UserRepository
 from restfull.domain.types import UserID
 from restfull.infrastructure.models.user import UserModel
@@ -25,7 +27,7 @@ class UserRepositorySqlalchemy(UserRepository):
     def __init__(self, database: async_sessionmaker[AsyncSession]):
         self.database = database
 
-    async def create(self, user: User) -> bool:
+    async def create(self, user: UserWhitPassword) -> bool:
         async with self.database() as session:
             user_dict = user.to_dict()
             # TODO: pure SQL

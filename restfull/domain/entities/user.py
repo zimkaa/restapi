@@ -3,7 +3,7 @@ from .entity import Entity
 
 class BaseModel(Entity):
     id: int
-    
+
 
 class User(Entity):
     name: str
@@ -11,9 +11,13 @@ class User(Entity):
     email: str
 
 
+class UserWhitPassword(User):
+    password: str
+
+
 class BaseUser(BaseModel, User):
     ...
 
 
-class UserWhitPassword(BaseUser):
+class BaseUserWhitPassword(BaseUser):
     password: str
