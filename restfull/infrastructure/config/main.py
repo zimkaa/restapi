@@ -11,6 +11,7 @@ class Settings(BaseSettings):
 
     user_tag: str = "user"
     all_users: str = "users"
+    user: str = "user"
 
 
 settings = Settings()
