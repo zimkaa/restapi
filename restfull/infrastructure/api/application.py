@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from restfull.infrastructure.api.endpoints import get_all_users
 from restfull.infrastructure.api.endpoints import create_user
+from restfull.infrastructure.api.endpoints import get_user
+from restfull.infrastructure.api.endpoints import update_user
 from restfull.infrastructure.config import settings
 from restfull.domain import const
 
@@ -22,12 +24,24 @@ application.add_middleware(
 
 application.include_router(
     get_all_users.router,
-    prefix=f"/{const.ALL_USERS}",
+    prefix=const.API,
+    tags=[const.USER_TAG],
+)
+
+application.include_router(
+    get_user.router,
+    prefix=const.API,
     tags=[const.USER_TAG],
 )
 
 application.include_router(
     create_user.router,
-    prefix=f"/{const.CREATE_USER}",
+    prefix=const.API,
+    tags=[const.USER_TAG],
+)
+
+application.include_router(
+    update_user.router,
+    prefix=const.API,
     tags=[const.USER_TAG],
 )
