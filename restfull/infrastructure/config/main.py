@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     # Project settings:
     project_name: str = "restfull"
 
-    database_url: str = "sqlite:///./restfull.db"
+    database_url: str = "sqlite+aiosqlite:///./restfull.db"
 
 
 settings = Settings()
