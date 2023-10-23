@@ -9,8 +9,11 @@ class User(Entity):
     name: str
     last_name: str
     email: str
-    password: str
 
 
 class BaseUser(BaseModel, User):
     ...
+
+
+class UserWhitPassword(BaseUser):
+    password: str

@@ -18,7 +18,6 @@ def from_model_to_base_user(model: UserModel) -> BaseUser:
         name=model.name,
         last_name=model.last_name,
         email=model.email if model.email else "",
-        password=model.password if model.password else "",
     )
 
 

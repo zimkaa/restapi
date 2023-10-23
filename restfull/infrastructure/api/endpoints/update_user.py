@@ -11,11 +11,11 @@ from restfull.infrastructure.repository.user import UserRepositorySqlalchemy
 router = APIRouter()
 
 
-@router.put("", summary="Update user")
+@router.put("", summary="Update user", response_model=BaseUser)
 async def get_user(
     user: BaseUser | None = None,
     db: async_sessionmaker[AsyncSession] = Depends(create_session),
 ):
     dal = UserRepositorySqlalchemy(db)
     user = await dal.update(user)
-    return user.to_dict()
+    return user
