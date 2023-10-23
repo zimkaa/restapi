@@ -4,6 +4,6 @@ from typing import Final
 USER_TAG: Final[str] = "user"
 
 ALL_USERS: Final[str] = "users"
-USER: Final[str] = "user"
+CREATE_USER: Final[str] = "create"
 
-CREATE: Final[str] = "create"
+USER: Final[str] = "user"
