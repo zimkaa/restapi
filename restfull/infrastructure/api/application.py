@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from restfull.infrastructure.api.endpoints import get_all_users
 from restfull.infrastructure.config import settings
+from restfull.domain import const
 
 
 application = FastAPI(
@@ -20,6 +21,6 @@ application.add_middleware(
 
 application.include_router(
     get_all_users.router,
-    prefix=f"/{settings.all_users}",
-    tags=[settings.user_tag],
+    prefix=f"/{const.ALL_USERS}",
+    tags=[const.USER_TAG],
 )
