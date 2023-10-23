@@ -46,7 +46,7 @@ class UserRepositorySqlalchemy(UserRepository):
 
         return True
 
-    async def get_by_id(self, user_id: UserID) -> BaseUser | None:
+    async def get_by_id(self, user_id: UserID) ->  BaseUser | None:
         async with self.database() as session:
             # TODO: pure SQL
             query = select(UserModel).where(UserModel.id == user_id)
@@ -57,13 +57,13 @@ class UserRepositorySqlalchemy(UserRepository):
             return from_model_to_base_user(user_model)
         return None
 
-    async def get_all(self) -> list[dict[str, Any]]:
+    async def get_all(self) -> list[BaseUser]:
         async with self.database() as session:
             # TODO: pure SQL
             query = select(UserModel)
             result = await session.scalars(query)
 
-        return [from_model_to_base_user(user_model).to_dict() for user_model in result.unique().all()]
+        return [from_model_to_base_user(user_model) for user_model in result.unique().all()]
 
     async def update(self, user: BaseUser) -> BaseUser:
         async with self.database() as session:
@@ -100,4 +100,4 @@ class UserRepositorySqlalchemy(UserRepository):
             query = select(UserModel).where(UserModel.name == name)
             result = await session.execute(query)
 
-        return result.scalars().all()
+        return [from_model_to_base_user(user_model) for user_model in result.scalars().all()]
