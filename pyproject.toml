@@ -1,0 +1,61 @@
+[tool.poetry]
+name = "restful-api"
+version = "0.1.0"
+description = ""
+authors = ["Anton Zimin <zimkaa87@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11.5"
+pytest = "^7.4.2"
+loguru = "^0.7.2"
+fastapi = {extras = ["all"], version = "^0.104.0"}
+sqlalchemy = "^2.0.22"
+pydantic-settings = "^2.0.3"
+
+
+[tool.poetry.group.dev.dependencies]
+bandit = "^1.7.5"
+pylint = "^3.0.2"
+mypy = "^1.6.1"
+autoflake = "^2.2.1"
+pre-commit = "^3.5.0"
+safety = "^2.3.5"
+ruff = "^0.1.1"
+black = "^23.10.0"
+isort = "^5.12.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+addopts = "-vvv"
+testpaths = [
+    "tests",
+]
+
+[tool.black]
+line-length = 120
+
+[tool.ruff]
+line-length = 120
+exclude = ["__init__.py", "alembic"]
+
+[tool.bandit]
+exclude_dirs = ["venv", "tests"]
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+exclude = ["venv/"]
+
+[tool.isort]
+line_length = 120
+profile = "black"
+multi_line_output = 7
+lines_after_imports = 2
+force_single_line = true
+
+[tool.autoflake]
+check = true

@@ -1,0 +1,20 @@
+
+## folders
+.venv/*
+.env/*
+__pycache__/*
+.pytest_cache/*
+.mypy_cache/*
+
+## files
+*.pyc
+*/test.py
+*.log
+*.log.zip
+# .python-version
+
+# dotenv
+# .env
+
+# test file
+test.py
