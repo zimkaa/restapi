@@ -1,3 +1,5 @@
+from restfull.domain import const
+
 from .entity import Entity
 
 
@@ -6,13 +8,13 @@ class BaseModel(Entity):
 
 
 class User(Entity):
-    name: str
-    last_name: str
-    email: str
+    name: str = const.EXAMPLE_NAME
+    last_name: str = const.EXAMPLE_LAST_NAME
+    email: str = const.EXAMPLE_EMAIL
 
 
 class UserWhitPassword(User):
-    password: str
+    password: str = const.EXAMPLE_PASSWORD
 
 
 class BaseUser(BaseModel, User):
