@@ -1,12 +1,18 @@
-from sqlalchemy import String, Integer
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy import Integer
+from sqlalchemy import String
+from sqlalchemy import null
+from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import mapped_column
 
-from restfull.infrastructure.models import Model
+from restfull.domain.types import UserID
+from restfull.infrastructure.models import Base
 
 
-class UserModel(Model):
-    __tablename__ = "user"
+class UserModel(Base):
+    __tablename__ = "users"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    first_name: Mapped[str] = mapped_column(String, nullable=False)
+    id: Mapped[UserID] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String, nullable=False)
     last_name: Mapped[str] = mapped_column(String, nullable=False)
+    email: Mapped[str] = mapped_column(String, nullable=True, unique=True, server_default=null())
+    password: Mapped[str] = mapped_column(String, nullable=True, server_default=null())
