@@ -17,7 +17,7 @@ class UnknownErrorResponse(ErrorResponse):
 
 
 class ErrorBodyParameterResponse(ErrorResponse):
-    payload: str = "Body parameters is empty"
+    payload: str = "Body parameters is empty or default"
 
 router = APIRouter()
 
