@@ -14,5 +14,5 @@ class UserModel(Base):
     id: Mapped[UserID] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String, nullable=False)
     last_name: Mapped[str] = mapped_column(String, nullable=False)
-    email: Mapped[str] = mapped_column(String, nullable=True, unique=True, server_default=null())
+    email: Mapped[str] = mapped_column(String, nullable=True, server_default=null())
     password: Mapped[str] = mapped_column(String, nullable=True, server_default=null())

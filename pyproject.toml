@@ -45,6 +45,7 @@ exclude = ["__init__.py", "alembic"]
 
 [tool.bandit]
 exclude_dirs = ["venv", "tests"]
+skips = ["B101"]
 
 [tool.mypy]
 python_version = "3.11"

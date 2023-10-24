@@ -11,7 +11,7 @@ from restfull.infrastructure.repository.user import UserRepositorySqlalchemy
 router = APIRouter()
 
 
-@router.get("/{user_id}", summary="Get user", response_model=BaseUser)
+@router.get("/{user_id}", summary="Get user", response_model=BaseUser | None)
 async def get_user(
     user_id: int,
     db: async_sessionmaker[AsyncSession] = Depends(create_session),

@@ -9,5 +9,7 @@ class Settings(BaseSettings):
 
     database_url: str = "sqlite+aiosqlite:///./restfull.db"
 
+    test_database_url: str = "sqlite+aiosqlite:///./test_restfull.db"
+
 
 settings = Settings()
