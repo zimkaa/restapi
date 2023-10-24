@@ -2,11 +2,11 @@
 
 1. Clone repository
 ```sh
-git clone 
+git clone git@github.com:zimkaa/restapi.git
 ```
 2. Change dir to project folder
 ```sh
-cd 
+cd ./restapi
 ```
 3. Create virtual environment
 ```sh
@@ -24,7 +24,7 @@ pip install -r ./requirements
 ```sh
 pytest
 ```
-7. Run localy
+7. Run locally
 ```sh
 python ./start.py
 ```
