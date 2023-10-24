@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import create_async_engine
 
 from restfull.domain import const
 from restfull.domain.entities.user import BaseUserWhitPassword
-from restfull.infrastructure.api.application import application
+from restfull.infrastructure.api.application import app
 from restfull.infrastructure.config import settings
 from restfull.infrastructure.database.sqlalchemy import create_session
 from restfull.infrastructure.models import Base
@@ -14,6 +14,7 @@ from restfull.infrastructure.models import Base
 @pytest.fixture
 def default_user() -> BaseUserWhitPassword:
     return BaseUserWhitPassword(id=1, name="Anna")
+
 
 test_engine = create_async_engine(
     settings.test_database_url,
@@ -29,8 +30,8 @@ async def _create_session_test():
 
 @pytest.fixture(scope="function")
 def client() -> TestClient:
-    application.dependency_overrides[create_session] = _create_session_test
-    return TestClient(application)
+    app.dependency_overrides[create_session] = _create_session_test
+    return TestClient(app)
 
 
 @pytest.fixture
