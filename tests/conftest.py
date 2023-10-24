@@ -13,7 +13,7 @@ from restfull.infrastructure.models import Base
 
 @pytest.fixture
 def default_user() -> BaseUserWhitPassword:
-    return BaseUserWhitPassword(id=1)
+    return BaseUserWhitPassword(id=1, name="Anna")
 
 test_engine = create_async_engine(
     settings.test_database_url,

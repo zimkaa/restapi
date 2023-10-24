@@ -7,7 +7,7 @@ from restfull.infrastructure.api.endpoints.search_user import ErrorParameterResp
 
 
 def test_search_user(client: TestClient, create_user_and_teardown):
-    test_user = UserWhitPassword()
+    test_user = UserWhitPassword(name="Anna")
     response = client.get(f"{const.API_PREFIX}/?name={test_user.name}")
     assert response.status_code == 200
     for user in response.json()["payload"]:

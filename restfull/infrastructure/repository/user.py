@@ -60,18 +60,20 @@ class UserRepositorySqlalchemy(UserRepository):
 
         return [from_model_to_base_user(user_model) for user_model in result.unique().all()]
 
-    async def update(self, user: BaseUser) -> BaseUser:
+    async def update(self, user: BaseUser) -> BaseUser | None:
         async with self.database() as session:
             user_dict = user.to_dict()
             # TODO: pure SQL
             query = update(UserModel).where(UserModel.id == user.id).values(**user_dict)
             try:
-                await session.execute(query)
+                result = await session.execute(query)
             except Exception as exc:
                 logger.error(exc)
                 raise exc
             await session.commit()
 
+        if result.rowcount == 0:
+            return None
         return user
 
     async def delete(self, user_id: UserID) -> bool:
