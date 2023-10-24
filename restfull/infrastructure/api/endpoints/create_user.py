@@ -16,6 +16,9 @@ class UnknownErrorResponse(ErrorResponse):
     payload: str = "See logs"
 
 
+class ErrorBodyParameterResponse(ErrorResponse):
+    payload: str = "Body parameters is empty"
+
 router = APIRouter()
 
 
@@ -24,6 +27,8 @@ async def create(
     user: UserWhitPassword,
     db: async_sessionmaker[AsyncSession] = Depends(create_session),
 ):
+    if user == UserWhitPassword():
+        return JSONResponse(status_code=status.HTTP_406_NOT_ACCEPTABLE, content=ErrorBodyParameterResponse().model_dump())
     dal = UserRepositorySqlalchemy(db)
     user = await dal.create(user)
     if user:
