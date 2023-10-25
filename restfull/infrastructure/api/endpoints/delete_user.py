@@ -10,6 +10,7 @@ from restfull.infrastructure.api.responses.base import ErrorResponse
 from restfull.infrastructure.api.responses.base import OkResponse
 from restfull.infrastructure.database.sqlalchemy import create_session
 from restfull.infrastructure.repository.user import UserRepositorySqlalchemy
+from restfull.infrastructure.api.endpoints.auth import current_user
 
 
 router = APIRouter()
@@ -27,6 +28,7 @@ class ErrorNoUserResponse(ErrorResponse):
 async def get_user_by_id(
     user_id: UserID,
     db: async_sessionmaker[AsyncSession] = Depends(create_session),
+    _ = Depends(current_user),
 ):
     dal = UserRepositorySqlalchemy(db)
     user = await dal.delete(user_id)

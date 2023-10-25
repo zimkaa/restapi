@@ -27,7 +27,7 @@ class UserRepositorySqlalchemy(UserRepository):
         async with self.database() as session:
             user_dict = user.to_dict()
             query = text(
-                "INSERT INTO users (name, last_name, email, password) VALUES (:name, :last_name, :email, :password)"
+                "INSERT INTO users (name, last_name, email) VALUES (:name, :last_name, :email)"
             )
             query = query.bindparams(**user_dict)
             try:
@@ -61,7 +61,7 @@ class UserRepositorySqlalchemy(UserRepository):
         async with self.database() as session:
             user_dict = user.to_dict()
             query = text(
-                "UPDATE users SET name=:name, last_name=:last_name, email=:email, password=:password WHERE id=:id"
+                "UPDATE users SET name=:name, last_name=:last_name, email=:email WHERE id=:id"
             )
             query = query.bindparams(**user_dict)
             try:

@@ -11,5 +11,7 @@ class Settings(BaseSettings):
 
     test_database_url: str = "sqlite+aiosqlite:///./test_restfull.db"
 
+    secret: str = "1baa098e0e20a75024f773778b11ec6aff247ce1d6628f2150c86dd18768a31c"
+
 
 settings = Settings()

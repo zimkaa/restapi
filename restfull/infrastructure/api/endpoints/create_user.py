@@ -7,9 +7,10 @@ from starlette import status
 
 from restfull.infrastructure.api.responses.base import ErrorResponse
 from restfull.infrastructure.api.responses.base import OkResponse
-from restfull.domain.entities.user import UserWhitPassword
+from restfull.domain.entities.user import User
 from restfull.infrastructure.database.sqlalchemy import create_session
 from restfull.infrastructure.repository.user import UserRepositorySqlalchemy
+from restfull.infrastructure.api.endpoints.auth import current_user
 
 
 class UnknownErrorResponse(ErrorResponse):
@@ -24,10 +25,11 @@ router = APIRouter()
 
 @router.post("", summary="Create user", response_model=OkResponse)
 async def create(
-    user: UserWhitPassword,
+    user: User,
     db: async_sessionmaker[AsyncSession] = Depends(create_session),
+    _ = Depends(current_user),
 ):
-    if user == UserWhitPassword():
+    if user == User():
         return JSONResponse(status_code=status.HTTP_406_NOT_ACCEPTABLE, content=ErrorBodyParameterResponse().model_dump())
     dal = UserRepositorySqlalchemy(db)
     user = await dal.create(user)

@@ -6,11 +6,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 
 from restfull.domain.entities.user import BaseUser
-from restfull.domain.entities.user import BaseUserWhitPassword
 from restfull.infrastructure.api.responses.base import ErrorResponse
 from restfull.infrastructure.api.responses.base import OkResponse
 from restfull.infrastructure.database.sqlalchemy import create_session
 from restfull.infrastructure.repository.user import UserRepositorySqlalchemy
+from restfull.infrastructure.api.endpoints.auth import current_user
 
 
 class ErrorWithUpdateResponse(ErrorResponse):
@@ -26,8 +26,9 @@ router = APIRouter()
 
 @router.put("", summary="Update user", response_model=BaseUpdateUserResponse)
 async def get_user(
-    user: BaseUserWhitPassword,
+    user: BaseUser,
     db: async_sessionmaker[AsyncSession] = Depends(create_session),
+    _ = Depends(current_user),
 ):
     dal = UserRepositorySqlalchemy(db)
     updated_user = await dal.update(user)

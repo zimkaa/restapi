@@ -1,3 +1,5 @@
+from pydantic import Field
+
 from restfull.domain import const
 
 from .entity import Entity
@@ -14,7 +16,7 @@ class User(Entity):
 
 
 class UserWhitPassword(User):
-    password: str = const.EXAMPLE_PASSWORD
+    hashed_password: str = Field(const.EXAMPLE_PASSWORD, alias="password")
 
 
 class BaseUser(BaseModel, User):
@@ -22,4 +24,4 @@ class BaseUser(BaseModel, User):
 
 
 class BaseUserWhitPassword(BaseUser):
-    password: str = const.EXAMPLE_PASSWORD
+    hashed_password: str = Field(const.EXAMPLE_PASSWORD, alias="password")

@@ -2,6 +2,7 @@ from loguru import logger
 
 from restfull.infrastructure.api.application import app
 
+
 if __name__ == "__main__":
     import uvicorn
 

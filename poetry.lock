@@ -505,13 +505,13 @@ gmpy2 = ["gmpy2"]
 
 [[package]]
 name = "email-validator"
-version = "2.1.0"
+version = "2.0.0.post2"
 description = "A robust email address syntax and deliverability validation library."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "email_validator-2.1.0-py3-none-any.whl", hash = "sha256:4496ecc949b51e42d1c9e6159d57cd04ef017af57d2e366ed7fd998f1bf8af69"},
-    {file = "email_validator-2.1.0.tar.gz", hash = "sha256:5f511cca8856bb03251d6292ba59e7f98978aae13fa5823ddd8bf885c56a6260"},
+    {file = "email_validator-2.0.0.post2-py3-none-any.whl", hash = "sha256:2466ba57cda361fb7309fd3d5a225723c788ca4bbad32a0ebd5373b99730285c"},
+    {file = "email_validator-2.0.0.post2.tar.gz", hash = "sha256:1ff6e86044200c56ae23595695c54e9614f4a9551e0e393614f764860b3d7900"},
 ]
 
 [package.dependencies]
@@ -548,6 +548,47 @@ uvicorn = {version = ">=0.12.0", extras = ["standard"], optional = true, markers
 
 [package.extras]
 all = ["email-validator (>=2.0.0)", "httpx (>=0.23.0)", "itsdangerous (>=1.1.0)", "jinja2 (>=2.11.2)", "orjson (>=3.2.1)", "pydantic-extra-types (>=2.0.0)", "pydantic-settings (>=2.0.0)", "python-multipart (>=0.0.5)", "pyyaml (>=5.3.1)", "ujson (>=4.0.1,!=4.0.2,!=4.1.0,!=4.2.0,!=4.3.0,!=5.0.0,!=5.1.0)", "uvicorn[standard] (>=0.12.0)"]
+
+[[package]]
+name = "fastapi-users"
+version = "12.1.2"
+description = "Ready-to-use and customizable users management for FastAPI"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "fastapi_users-12.1.2-py3-none-any.whl", hash = "sha256:768e3b17b9b89b5f5d3c303afefd69874da0fc97ebac16a86167d4c8d414d479"},
+    {file = "fastapi_users-12.1.2.tar.gz", hash = "sha256:9a9b44e0917c483aaba2bf80ea488b4ba6475b0fb24e2abfaf21e0b5c5db59bf"},
+]
+
+[package.dependencies]
+email-validator = ">=1.1.0,<2.1"
+fastapi = ">=0.65.2"
+fastapi-users-db-sqlalchemy = {version = ">=6.0.0", optional = true, markers = "extra == \"sqlalchemy\""}
+makefun = ">=1.11.2,<2.0.0"
+passlib = {version = "1.7.4", extras = ["bcrypt"]}
+pyjwt = {version = "2.8.0", extras = ["crypto"]}
+python-multipart = "0.0.6"
+
+[package.extras]
+beanie = ["fastapi-users-db-beanie (>=3.0.0)"]
+oauth = ["httpx-oauth (>=0.13)"]
+redis = ["redis (>=4.3.3,<6.0.0)"]
+sqlalchemy = ["fastapi-users-db-sqlalchemy (>=6.0.0)"]
+
+[[package]]
+name = "fastapi-users-db-sqlalchemy"
+version = "6.0.1"
+description = "FastAPI Users database adapter for SQLAlchemy"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "fastapi_users_db_sqlalchemy-6.0.1-py3-none-any.whl", hash = "sha256:d1050ec31eb75e8c4fa9abafa4addaf0baf5c97afeea2f0f910ea55e2451fcad"},
+    {file = "fastapi_users_db_sqlalchemy-6.0.1.tar.gz", hash = "sha256:f0ef9fe3250453712d25c13170700c80fa205867ce7add7ef391c384ec27cbe1"},
+]
+
+[package.dependencies]
+fastapi-users = ">=10.0.0"
+sqlalchemy = {version = ">=2.0.0,<2.1.0", extras = ["asyncio"]}
 
 [[package]]
 name = "filelock"
@@ -872,6 +913,17 @@ win32-setctime = {version = ">=1.0.0", markers = "sys_platform == \"win32\""}
 
 [package.extras]
 dev = ["Sphinx (==7.2.5)", "colorama (==0.4.5)", "colorama (==0.4.6)", "exceptiongroup (==1.1.3)", "freezegun (==1.1.0)", "freezegun (==1.2.2)", "mypy (==v0.910)", "mypy (==v0.971)", "mypy (==v1.4.1)", "mypy (==v1.5.1)", "pre-commit (==3.4.0)", "pytest (==6.1.2)", "pytest (==7.4.0)", "pytest-cov (==2.12.1)", "pytest-cov (==4.1.0)", "pytest-mypy-plugins (==1.9.3)", "pytest-mypy-plugins (==3.0.0)", "sphinx-autobuild (==2021.3.14)", "sphinx-rtd-theme (==1.3.0)", "tox (==3.27.1)", "tox (==4.11.0)"]
+
+[[package]]
+name = "makefun"
+version = "1.15.1"
+description = "Small library to dynamically create python functions."
+optional = false
+python-versions = "*"
+files = [
+    {file = "makefun-1.15.1-py2.py3-none-any.whl", hash = "sha256:a63cfc7b47a539c76d97bd4fdb833c7d0461e759fd1225f580cb4be6200294d4"},
+    {file = "makefun-1.15.1.tar.gz", hash = "sha256:40b0f118b6ded0d8d78c78f1eb679b8b6b2462e3c1b3e05fb1b2da8cd46b48a5"},
+]
 
 [[package]]
 name = "markdown-it-py"
@@ -1445,6 +1497,26 @@ files = [
 plugins = ["importlib-metadata"]
 
 [[package]]
+name = "pyjwt"
+version = "2.8.0"
+description = "JSON Web Token implementation in Python"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "PyJWT-2.8.0-py3-none-any.whl", hash = "sha256:59127c392cc44c2da5bb3192169a91f429924e17aff6534d70fdc02ab3e04320"},
+    {file = "PyJWT-2.8.0.tar.gz", hash = "sha256:57e28d156e3d5c10088e0c68abb90bfac3df82b40a71bd0daa20c65ccd5c23de"},
+]
+
+[package.dependencies]
+cryptography = {version = ">=3.4.0", optional = true, markers = "extra == \"crypto\""}
+
+[package.extras]
+crypto = ["cryptography (>=3.4.0)"]
+dev = ["coverage[toml] (==5.0.4)", "cryptography (>=3.4.0)", "pre-commit", "pytest (>=6.0.0,<7.0.0)", "sphinx (>=4.5.0,<5.0.0)", "sphinx-rtd-theme", "zope.interface"]
+docs = ["sphinx (>=4.5.0,<5.0.0)", "sphinx-rtd-theme", "zope.interface"]
+tests = ["coverage[toml] (==5.0.4)", "pytest (>=6.0.0,<7.0.0)"]
+
+[[package]]
 name = "pylint"
 version = "3.0.2"
 description = "python code static checker"
@@ -1880,7 +1952,7 @@ files = [
 ]
 
 [package.dependencies]
-greenlet = {version = "!=0.4.17", markers = "platform_machine == \"aarch64\" or platform_machine == \"ppc64le\" or platform_machine == \"x86_64\" or platform_machine == \"amd64\" or platform_machine == \"AMD64\" or platform_machine == \"win32\" or platform_machine == \"WIN32\""}
+greenlet = {version = "!=0.4.17", optional = true, markers = "platform_machine == \"aarch64\" or platform_machine == \"ppc64le\" or platform_machine == \"x86_64\" or platform_machine == \"amd64\" or platform_machine == \"AMD64\" or platform_machine == \"win32\" or platform_machine == \"WIN32\" or extra == \"asyncio\""}
 typing-extensions = ">=4.2.0"
 
 [package.extras]
@@ -2321,4 +2393,4 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11.5"
-content-hash = "0353bfe000fefb19db6475307a14f240b9327337580ca12feb64f68efbc24e5f"
+content-hash = "d7c7fe6f01f44a4eaeead3b03734da1b656b056f2c85323321bb2d0d0b99f93e"
