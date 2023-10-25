@@ -6,9 +6,10 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: "rest"
+    image: "rest"
     restart: unless-stopped
     ports:
       - 8000:8000
     volumes:
-      - ./API_logs.log:/API_logs.log:rw
-      - ./restfull.db:/restfull.db:rw
+      - ./API_logs.log:/home/appuser/app/API_logs.log:rw
+      - ./restfull.db:/home/appuser/app/restfull.db:rw
