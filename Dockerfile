@@ -54,6 +54,4 @@ ENV PATH="/home/appuser/app/.venv/bin:$PATH"
 
 COPY --chown=appuser:appgroup ./restfull /home/appuser/app/restfull/
 
-COPY --chown=appuser:appgroup ./start.py /home/appuser/app/
-
 CMD ["uvicorn", "restfull.infrastructure.api.application:app", "--host", "0.0.0.0", "--port", "8000"]

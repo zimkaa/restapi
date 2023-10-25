@@ -18,7 +18,7 @@ source ./.venv/bin/activate
 ```
 5. Install dependency
 ```sh
-pip install -r ./requirements
+pip install -r ./requirements.txt
 ```
 6. Run tests
 ```sh
