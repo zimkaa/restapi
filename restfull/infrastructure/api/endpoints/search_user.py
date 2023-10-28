@@ -1,14 +1,14 @@
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi.responses import JSONResponse
-from sqlalchemy.ext.asyncio import async_sessionmaker
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.ext.asyncio import async_sessionmaker
 from starlette import status
 
 from restfull.domain.entities.user import BaseUser
 from restfull.infrastructure.api.responses.base import ErrorResponse
 from restfull.infrastructure.api.responses.base import OkResponse
-from restfull.infrastructure.database.sqlalchemy import create_session
+from restfull.infrastructure.database.sqlalchemy import get_async_session
 from restfull.infrastructure.repository.user import UserRepositorySqlalchemy
 
 
@@ -27,7 +27,6 @@ class BaseListUserResponse(OkResponse):
 router = APIRouter()
 
 
-# @router.get("/", summary="Search users", description="Search users by the name", response_model=list[BaseUser])
 @router.get(
     "/",
     summary="Search users",
@@ -36,7 +35,7 @@ router = APIRouter()
 )
 async def get_user_by_id(
     name: str,
-    db: async_sessionmaker[AsyncSession] = Depends(create_session),
+    db: async_sessionmaker[AsyncSession] = Depends(get_async_session),
 ):
     if not name:
         return JSONResponse(status_code=status.HTTP_406_NOT_ACCEPTABLE, content=ErrorParameterResponse().model_dump())

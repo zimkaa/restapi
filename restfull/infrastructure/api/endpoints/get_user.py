@@ -1,15 +1,16 @@
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi.responses import JSONResponse
-from sqlalchemy.ext.asyncio import async_sessionmaker
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.ext.asyncio import async_sessionmaker
 from starlette import status
 
 from restfull.domain.entities.user import BaseUser
 from restfull.infrastructure.api.responses.base import ErrorResponse
 from restfull.infrastructure.api.responses.base import OkResponse
-from restfull.infrastructure.database.sqlalchemy import create_session
+from restfull.infrastructure.database.sqlalchemy import get_async_session
 from restfull.infrastructure.repository.user import UserRepositorySqlalchemy
+
 
 router = APIRouter()
 
@@ -29,7 +30,7 @@ class ErrorUserResponse(ErrorResponse):
 )
 async def get_user(
     user_id: int,
-    db: async_sessionmaker[AsyncSession] = Depends(create_session),
+    db: async_sessionmaker[AsyncSession] = Depends(get_async_session),
 ):
     dal = UserRepositorySqlalchemy(db)
     user = await dal.get_by_id(user_id)
