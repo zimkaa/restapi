@@ -16,6 +16,7 @@ aiosqlite = "^0.19.0"
 python-jose = {extras = ["cryptography"], version = "^3.3.0"}
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}
 fastapi-users = {extras = ["sqlalchemy"], version = "^12.1.2"}
+pytest-asyncio = "^0.21.1"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -38,6 +39,7 @@ addopts = "-vvv"
 testpaths = [
     "tests",
 ]
+asyncio_mode="auto"
 
 [tool.black]
 line-length = 120

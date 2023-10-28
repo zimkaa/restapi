@@ -1,11 +1,29 @@
+from typing import AsyncGenerator
+
+from fastapi import Depends
+from fastapi_users.db import SQLAlchemyUserDatabase
 from sqlalchemy.ext.asyncio import async_sessionmaker
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.ext.asyncio import create_async_engine
 
 from restfull.infrastructure.models import Base
-from restfull.infrastructure.database.engine import engine
+from restfull.infrastructure.models.user import UserModel
+from restfull.infrastructure.config import settings
 
 
-async def create_session() -> async_sessionmaker[AsyncSession]:
+engine = create_async_engine(
+    settings.database_url,
+    echo=False,
+)
+
+
+async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
-    return async_sessionmaker(engine, expire_on_commit=False)
+    async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
+    async with async_session_maker() as session:
+        yield session
+
+
+async def get_user_db(session: AsyncSession = Depends(get_async_session)):
+    yield SQLAlchemyUserDatabase(session, UserModel)

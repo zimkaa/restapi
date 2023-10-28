@@ -6,7 +6,7 @@ from fastapi_users import BaseUserManager
 from fastapi_users import IntegerIDMixin
 
 from restfull.infrastructure.models.user import UserModel
-from restfull.infrastructure.auth.database import get_user_db
+from restfull.infrastructure.database.sqlalchemy import get_user_db
 
 
 SECRET = "SECRET"
