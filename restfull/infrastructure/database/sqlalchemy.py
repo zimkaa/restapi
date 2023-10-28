@@ -2,13 +2,13 @@ from typing import AsyncGenerator
 
 from fastapi import Depends
 from fastapi_users.db import SQLAlchemyUserDatabase
-from sqlalchemy.ext.asyncio import async_sessionmaker
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.ext.asyncio import async_sessionmaker
 from sqlalchemy.ext.asyncio import create_async_engine
 
+from restfull.infrastructure.config import settings
 from restfull.infrastructure.models import Base
 from restfull.infrastructure.models.user import UserModel
-from restfull.infrastructure.config import settings
 
 
 engine = create_async_engine(

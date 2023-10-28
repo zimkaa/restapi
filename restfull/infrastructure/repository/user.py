@@ -3,7 +3,6 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from restfull.domain.entities.user import BaseUser
-from restfull.domain.entities.user import UserWhitPassword
 from restfull.domain.repository.user import UserRepository
 from restfull.domain.types import UserID
 from restfull.infrastructure.models.user import UserModel
@@ -22,27 +21,25 @@ class UserRepositorySqlalchemy(UserRepository):
     def __init__(self, database: AsyncSession):
         self.session = database
 
-    async def get_by_id(self, user_id: UserID) ->  BaseUser | None:
+    async def get_by_id(self, user_id: UserID) -> BaseUser | None:
         query = text("SELECT * FROM users WHERE id=:id")
         query = query.bindparams(id=user_id)
         result = await self.session.execute(query)
 
         user_model = result.fetchone()
         if user_model:
-            return from_model_to_base_user(user_model)
+            return from_model_to_base_user(user_model)  # type: ignore
         return None
 
     async def get_all(self) -> list[BaseUser]:
         query = text("SELECT * FROM users")
         result = await self.session.execute(query)
 
-        return [from_model_to_base_user(user_model) for user_model in result.fetchall()]
+        return [from_model_to_base_user(user_model) for user_model in result.fetchall()]  # type: ignore
 
     async def update(self, user: BaseUser) -> BaseUser | None:
         user_dict = user.to_dict()
-        query = text(
-            "UPDATE users SET name=:name, last_name=:last_name, email=:email WHERE id=:id"
-        )
+        query = text("UPDATE users SET name=:name, last_name=:last_name, email=:email WHERE id=:id")
         query = query.bindparams(**user_dict)
         try:
             result = await self.session.execute(query)
@@ -51,7 +48,7 @@ class UserRepositorySqlalchemy(UserRepository):
             raise exc
         await self.session.commit()
 
-        if result.rowcount == 0:
+        if result.rowcount == 0:  # type: ignore
             return None
         return user
 
@@ -65,7 +62,7 @@ class UserRepositorySqlalchemy(UserRepository):
             raise exc
         await self.session.commit()
 
-        if result.rowcount == 0:
+        if result.rowcount == 0:  # type: ignore
             return False
         return True
 
@@ -74,4 +71,4 @@ class UserRepositorySqlalchemy(UserRepository):
         query = query.bindparams(username=name)
         result = await self.session.execute(query)
 
-        return [from_model_to_base_user(user_model) for user_model in result.fetchall()]
+        return [from_model_to_base_user(user_model) for user_model in result.fetchall()]  # type: ignore

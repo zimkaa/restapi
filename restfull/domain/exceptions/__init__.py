@@ -1,4 +1,5 @@
-from .user import UserAlreadyExists, UserNotFound
+from .user import UserAlreadyExists
+from .user import UserNotFound
 
 
 __all__ = [

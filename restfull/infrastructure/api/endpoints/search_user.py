@@ -2,7 +2,6 @@ from fastapi import APIRouter
 from fastapi import Depends
 from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.ext.asyncio import async_sessionmaker
 from starlette import status
 
 from restfull.domain.entities.user import BaseUser
@@ -35,7 +34,7 @@ router = APIRouter()
 )
 async def get_user_by_id(
     name: str,
-    db: async_sessionmaker[AsyncSession] = Depends(get_async_session),
+    db: AsyncSession = Depends(get_async_session),
 ):
     if not name:
         return JSONResponse(status_code=status.HTTP_406_NOT_ACCEPTABLE, content=ErrorParameterResponse().model_dump())

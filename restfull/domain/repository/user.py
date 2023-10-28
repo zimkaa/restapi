@@ -2,7 +2,6 @@ from abc import ABC
 from abc import abstractmethod
 
 from restfull.domain.entities.user import BaseUser
-from restfull.domain.entities.user import User
 from restfull.domain.types import UserID
 
 
@@ -18,13 +17,13 @@ class UserRepository(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    async def update(self, user_id: UserID) -> BaseUser:
+    async def update(self, user: BaseUser) -> BaseUser | None:
         raise NotImplementedError()
-    
+
     @abstractmethod
-    async def delete(self, user_id: UserID) -> BaseUser | None:
+    async def delete(self, user_id: UserID) -> bool:
         raise NotImplementedError()
-    
+
     @abstractmethod
-    async def search_user_by_name(self, name: str) -> BaseUser | None:
+    async def search_user_by_name(self, name: str) -> list[BaseUser]:
         raise NotImplementedError()

@@ -2,7 +2,6 @@ from fastapi import APIRouter
 from fastapi import Depends
 from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.ext.asyncio import async_sessionmaker
 from starlette import status
 
 from restfull.domain.entities.user import BaseUser
@@ -30,7 +29,7 @@ class ErrorUserResponse(ErrorResponse):
 )
 async def get_user(
     user_id: int,
-    db: async_sessionmaker[AsyncSession] = Depends(get_async_session),
+    db: AsyncSession = Depends(get_async_session),
 ):
     dal = UserRepositorySqlalchemy(db)
     user = await dal.get_by_id(user_id)

@@ -2,7 +2,6 @@ from fastapi import APIRouter
 from fastapi import Depends
 from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.ext.asyncio import async_sessionmaker
 from starlette import status
 
 from restfull.domain.entities.user import BaseUser
@@ -27,8 +26,8 @@ router = APIRouter()
 @router.put("", summary="Update user", response_model=BaseUpdateUserResponse)
 async def get_user(
     user: BaseUser,
-    db: async_sessionmaker[AsyncSession] = Depends(get_async_session),
-    _ = Depends(current_user),
+    db: AsyncSession = Depends(get_async_session),
+    _=Depends(current_user),
 ):
     dal = UserRepositorySqlalchemy(db)
     updated_user = await dal.update(user)
