@@ -22,21 +22,6 @@ class UserRepositorySqlalchemy(UserRepository):
     def __init__(self, database: AsyncSession):
         self.session = database
 
-    async def create(self, user: UserWhitPassword) -> bool:
-        user_dict = user.to_dict()
-        query = text(
-            "INSERT INTO users (name, last_name, email) VALUES (:name, :last_name, :email)"
-        )
-        query = query.bindparams(**user_dict)
-        try:
-            await self.session.execute(query)
-        except Exception as exc:
-            logger.error(exc)
-            raise exc
-        await self.session.commit()
-
-        return True
-
     async def get_by_id(self, user_id: UserID) ->  BaseUser | None:
         query = text("SELECT * FROM users WHERE id=:id")
         query = query.bindparams(id=user_id)

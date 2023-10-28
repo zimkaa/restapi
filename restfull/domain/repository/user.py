@@ -10,10 +10,6 @@ class UserRepository(ABC):
     """Data Access Layer for user info"""
 
     @abstractmethod
-    async def create(self, user: User) -> User:
-        raise NotImplementedError()
-
-    @abstractmethod
     async def get_by_id(self, user_id: UserID) -> BaseUser | None:
         raise NotImplementedError()
 
