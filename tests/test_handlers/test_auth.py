@@ -18,3 +18,9 @@ def test_login(client: TestClient, default_user_create: UserCreate, create_user)
         data={"username": default_user_create.email, "password": default_user_create.password},
     )
     assert response.status_code == 204
+
+
+def test_logout(client: TestClient, authorize_cookie):
+    response = client.post("/auth/jwt/logout", cookies=authorize_cookie)
+    assert response.status_code == 204
+    assert "restfull" not in response.cookies
