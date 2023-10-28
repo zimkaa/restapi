@@ -3,50 +3,65 @@ from fastapi.testclient import TestClient
 from sqlalchemy.ext.asyncio import async_sessionmaker
 from sqlalchemy.ext.asyncio import create_async_engine
 
-from restfull.domain import const
-from restfull.domain.entities.user import BaseUserWhitPassword
 from restfull.infrastructure.api.application import app
+from restfull.infrastructure.auth.schemas import UserCreate
 from restfull.infrastructure.config import settings
-from restfull.infrastructure.database.sqlalchemy import create_session
-from restfull.infrastructure.models import Base
+from restfull.infrastructure.database.sqlalchemy import get_async_session
+from restfull.infrastructure.models.base import Base
 
 
 @pytest.fixture
-def default_user() -> BaseUserWhitPassword:
-    return BaseUserWhitPassword(id=1, name="Anna")
+def default_user_create() -> UserCreate:
+    default_user = UserCreate(
+        email="test@example.com",
+        password="testpassword",
+        is_active=True,
+        is_superuser=False,
+        is_verified=False,
+        name="testuser",
+        last_name="testlastname",
+    )
+    return default_user
 
 
-test_engine = create_async_engine(
+engine_test = create_async_engine(
     settings.test_database_url,
     echo=True,
 )
+async_session_maker = async_sessionmaker(engine_test, expire_on_commit=False)
 
 
-async def _create_session_test():
-    async with test_engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-    return async_sessionmaker(test_engine, expire_on_commit=False)
+async def _get_async_session_test():
+    async with async_session_maker() as session:
+        yield session
 
 
-@pytest.fixture(scope="function")
+app.dependency_overrides[get_async_session] = _get_async_session_test
+
+
+@pytest.fixture
 def client() -> TestClient:
-    app.dependency_overrides[create_session] = _create_session_test
     return TestClient(app)
 
 
-@pytest.fixture
-def create_user(client: TestClient, default_user: BaseUserWhitPassword):
-    client.post(const.API_PREFIX, json=default_user.to_dict())
-
-
-@pytest.fixture
-def create_user_and_teardown(client: TestClient, default_user: BaseUserWhitPassword):
-    client.post(const.API_PREFIX, json=default_user.to_dict())
+@pytest.fixture(autouse=True, scope="function")
+async def prepare_database():
+    async with engine_test.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
     yield
-    client.delete(f"{const.API_PREFIX}/{default_user.id}")
+    async with engine_test.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
 
 
 @pytest.fixture
-def delete_default_user(client: TestClient, default_user: BaseUserWhitPassword):
-    yield
-    client.delete(f"{const.API_PREFIX}/{default_user.id}")
+def create_user(client: TestClient, default_user_create: UserCreate):
+    client.post("/api/register", json=default_user_create.model_dump())
+
+
+@pytest.fixture
+def authorize_cookie(client: TestClient, create_user, default_user_create: UserCreate):
+    response = client.post(
+        "/auth/jwt/login",
+        data={"username": default_user_create.email, "password": default_user_create.password},
+    )
+    return {"restfull": response.cookies["restfull"]}

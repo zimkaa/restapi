@@ -1,5 +1,4 @@
 from fastapi.testclient import TestClient
-from loguru import logger
 
 from restfull.domain import const
 from restfull.infrastructure.auth.schemas import UserCreate
